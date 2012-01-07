@@ -1,0 +1,23 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+    version="1.0">
+    <persistence-unit name="scrobbler_persistance" transaction-type="RESOURCE_LOCAL">
+        <class>fi.eis.applications.scrobbler.domain.ScrobblingEntry</class>
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver" />
+            <property name="javax.persistence.jdbc.user" value="sa" />
+            <property name="javax.persistence.jdbc.password" value="" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:mem:testdb" />
+            
+            <property name="eclipselink.logging.level" value="FINEST"/>
+            <!-- 
+            <property name="eclipselink.target-server" value="WebLogic_10"/>
+            <property name="eclipselink.target-database" value="Derby"/>            
+            <property name="eclipselink.logging.level" value="FINEST"/>
+            < !-- new for 10.3.4.0 http://wiki.eclipse.org/EclipseLink/Examples/JPA/Logging#Server_Logging  -- >
+            <property name="eclipselink.logging.logger" value="DefaultLogger"/>
+            < !-- property name="eclipselink.ddl-generation" value="drop-and-create-tables"/-- >
+            < !-- property name="eclipselink.ddl-generation.output-mode" value="database"/-- >
+            -->
+        </properties>
+    </persistence-unit>
+</persistence>

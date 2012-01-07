@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>fi.slsh.applications</groupId>
+  <groupId>fi.eis.applications</groupId>
   <artifactId>scrobblerinterface</artifactId>
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
@@ -26,12 +26,18 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
+	  <exclusions>
+	     <exclusion>
+	       <groupId>commons-logging</groupId>
+	       <artifactId>commons-logging</artifactId>
+	     </exclusion>
+	  </exclusions>      
       <version>${org.springframework.version}</version>
     </dependency>
     <dependency>
-    	<groupId>org.springframework</groupId>
-    	<artifactId>spring-core</artifactId>
-    	<version>${org.springframework.version}</version>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+      <version>${org.springframework.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
@@ -63,6 +69,34 @@
       <artifactId>spring-webmvc</artifactId>
       <version>${org.springframework.version}</version>
     </dependency>
+	<dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-jpa</artifactId>
+      <version>1.0.2.RELEASE</version>
+	</dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-instrument</artifactId>
+      <version>${org.springframework.version}</version>
+      <scope>runtime</scope>
+    </dependency>	
+    <dependency>
+      <groupId>hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <version>1.8.0.10</version>
+    </dependency>
+    <!-- general JPA 2 api -->
+    <dependency>
+      <groupId>org.eclipse.persistence</groupId>
+      <artifactId>javax.persistence</artifactId>
+      <version>2.0.0</version>
+    </dependency>
+    <!-- eclipse implementation of JPA2, not found in general maven repository -->                	
+    <dependency>
+      <groupId>org.eclipse.persistence</groupId>
+      <artifactId>eclipselink</artifactId>
+      <version>2.2.0</version>
+    </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
@@ -81,6 +115,26 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <repositories>
+    <repository>
+      <id>central</id>
+      <name>Maven Repository Switchboard</name>
+      <layout>default</layout>
+      <url>http://repo1.maven.org/maven2</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>spring-milestone</id>
+      <name>Spring Maven MILESTONE Repository</name>
+      <url>http://maven.springframework.org/milestone</url>
+    </repository>
+    <repository>
+      <id>EclipseLink Repo</id>
+      <url>http://download.eclipse.org/rt/eclipselink/maven.repo</url>
+    </repository>    
+  </repositories> 
   <build>
     <finalName>scrobblerinterface</finalName>
     <plugins>
@@ -93,6 +147,14 @@
           <target>1.6</target>
         </configuration>
       </plugin>
+      <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.8</version>
+          <configuration>
+              <argLine>-javaagent:"${settings.localRepository}"/org/springframework/spring-instrument/${org.springframework.version}/spring-instrument-${org.springframework.version}.jar</argLine>
+          </configuration>
+      </plugin>      
     </plugins>
   </build>
   <properties>

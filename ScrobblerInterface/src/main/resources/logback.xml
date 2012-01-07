@@ -1,0 +1,25 @@
+<configuration>
+
+  <appender name="APPLOG" class="ch.qos.logback.core.FileAppender">
+    <file>logs/app_scrobbler.log</file>
+    <layout class="ch.qos.logback.classic.PatternLayout">
+      <Pattern>%date %level [%thread] %logger{0} [%file:%line] %msg%n</Pattern>
+    </layout>
+  </appender>
+  <appender name="SPRINGLOG" class="ch.qos.logback.core.FileAppender">
+    <file>logs/spring.log</file>
+    <layout class="ch.qos.logback.classic.PatternLayout">
+      <Pattern>%date %level [%thread] %logger{0} [%file:%line] %msg%n</Pattern>
+    </layout>
+  </appender>
+
+  <logger name="fi.eis.applications" additivity="false">
+    <appender-ref ref="APPLOG" />
+  </logger>
+  <logger name="org.springframework" additivity="false">
+    <appender-ref ref="SPRINGLOG" />
+  </logger>
+  <root>
+    <level value="OFF" />
+  </root>
+</configuration>
